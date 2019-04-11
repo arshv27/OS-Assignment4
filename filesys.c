@@ -7,7 +7,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <assert.h>
-#include <vector>
+#include <stdlib.h>
 
 static int filesys_inited = 0;
 
@@ -15,7 +15,7 @@ struct node{
 	char *hash;
 	struct node *next;
 	struct node *prev;
-}
+};
 
 /* returns 20 bytes unique hash of the buffer (buf) of length (len)
  * in input array sha1.
@@ -25,10 +25,8 @@ void get_sha1_hash (const void *buf, int len, const void *sha1)
 	SHA1 ((unsigned char*)buf, len, (unsigned char*)sha1);
 }
 
-char* create_merkel_tree(FILE *fp){
-	fseek(fp, 0L, SEEK_END);
-	int sz = ftell(fp);
-	fseek(fp, 0L, SEEK_SET);
+char* create_merkel_tree(int fp, int sz){
+	
 	struct node* head = (struct node*)malloc(sizeof(struct node));
 	struct node* end = (struct node*)malloc(sizeof(struct node));
 
@@ -84,11 +82,18 @@ char* create_merkel_tree(FILE *fp){
  */
 int s_open (const char *pathname, int flags, mode_t mode)
 {
-	if(access(pathname, F_OK) == -1){
 
-	}
-	FILE *fp = fopen(pathname, mode);
+	FILE *fp = fopen(pathname, "r");
+	fseek(fp, 0L, SEEK_END);
+	int sz = ftell(fp);
+	fseek(fp, 0L, SEEK_SET);
+	fclose(fp);
 
+	int fd = open(pathname, flags, mode);
+
+	FILE *fp = fopen("secure.txt", "a+");
+	
+	
 	assert (filesys_inited);
 	return open (pathname, flags, mode);
 }
@@ -140,5 +145,9 @@ int s_close (int fd)
 int filesys_init (void)
 {
 	filesys_inited = 1;
+	return 0;
+}
+
+int main(){
 	return 0;
 }
