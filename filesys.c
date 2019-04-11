@@ -7,8 +7,15 @@
 #include <stdio.h>
 #include <string.h>
 #include <assert.h>
+#include <vector>
 
 static int filesys_inited = 0;
+
+struct node{
+	char *hash;
+	struct node *next;
+	struct node *prev;
+}
 
 /* returns 20 bytes unique hash of the buffer (buf) of length (len)
  * in input array sha1.
@@ -16,6 +23,55 @@ static int filesys_inited = 0;
 void get_sha1_hash (const void *buf, int len, const void *sha1)
 {
 	SHA1 ((unsigned char*)buf, len, (unsigned char*)sha1);
+}
+
+char* create_merkel_tree(FILE *fp){
+	fseek(fp, 0L, SEEK_END);
+	int sz = ftell(fp);
+	fseek(fp, 0L, SEEK_SET);
+	struct node* head = (struct node*)malloc(sizeof(struct node));
+	struct node* end = (struct node*)malloc(sizeof(struct node));
+
+	int ptr = 0;
+	while(ptr < sz){
+		char data[64];
+		if(sz - ptr < 64){
+			read(fp, data, sz - ptr);
+		}else{
+			read(fp, data, 64);
+		}
+		if(ptr == 0){
+			get_sha1_hash(data, 20, head->hash);
+			head->next = NULL;
+			head->prev = NULL;
+			end = head;
+		}else{
+			struct node *temp = (struct node*)malloc(sizeof(struct node));
+			get_sha1_hash(data, 20, temp->hash);
+			end->next = temp;
+			temp->prev = end;
+			end = temp;
+		}
+		ptr += 64;
+	}
+	char *final;
+	while(head != NULL){
+		if(head->next == NULL){
+			final = head->hash;
+			break;
+		}
+		char *a = head->hash;
+		char *b = head->next->hash;
+		char *c = strcat(a, b);		
+		struct node *temp = (struct node*)malloc(sizeof(struct node));
+		get_sha1_hash(c, 20, temp->hash);
+		end->next = temp;
+		temp->prev = end;
+		end = temp;
+		head = head->next->next;
+	}
+
+	return final;
 }
 
 /* Build an in-memory Merkle tree for the file.
@@ -28,6 +84,11 @@ void get_sha1_hash (const void *buf, int len, const void *sha1)
  */
 int s_open (const char *pathname, int flags, mode_t mode)
 {
+	if(access(pathname, F_OK) == -1){
+
+	}
+	FILE *fp = fopen(pathname, mode);
+
 	assert (filesys_inited);
 	return open (pathname, flags, mode);
 }
