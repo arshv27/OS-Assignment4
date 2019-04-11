@@ -90,10 +90,34 @@ int s_open (const char *pathname, int flags, mode_t mode)
 	fclose(fp);
 
 	int fd = open(pathname, flags, mode);
-
+	char *filehash = create_merkel_tree(fd, sz);
 	FILE *fp = fopen("secure.txt", "a+");
-	
-	
+	char line[1000];
+	size_t len = 0;
+	while ((read = getline(&line, &len, fp)) != -1){
+		char *name;
+		char *hash;
+		while(*line != ' '){
+			*name = *line;
+			name++;
+			line++;
+		}
+		line++;
+		while(*line != '\0'){
+			*hash = *line;
+			line++;
+			hash++;
+		}
+
+		if(!strcmp(pathname, name)){
+			if(strcmp(hash, filehash) != 0){
+				return -1;
+			}else{
+				return 0;
+			}
+		}
+	}
+
 	assert (filesys_inited);
 	return open (pathname, flags, mode);
 }
