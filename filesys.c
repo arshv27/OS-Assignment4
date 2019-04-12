@@ -11,11 +11,15 @@
 
 static int filesys_inited = 0;
 
+// int count = 0;
+
 struct node{
 	char *hash;
 	struct node *next;
 	struct node *prev;
 };
+
+struct node *node_arr[1024];
 
 /* returns 20 bytes unique hash of the buffer (buf) of length (len)
  * in input array sha1.
@@ -25,7 +29,7 @@ void get_sha1_hash (const void *buf, int len, const void *sha1)
 	SHA1 ((unsigned char*)buf, len, (unsigned char*)sha1);
 }
 
-char* create_merkel_tree(int fp, int sz){
+int create_merkel_tree(const char *filepath, int fp, int sz){
 	
 	struct node* head = (struct node*)malloc(sizeof(struct node));
 	struct node* end = (struct node*)malloc(sizeof(struct node));
@@ -39,62 +43,52 @@ char* create_merkel_tree(int fp, int sz){
 			read(fp, data, 64);
 		}
 		if(ptr == 0){
-			get_sha1_hash(data, 20, head->hash);
+			get_sha1_hash(data, 64, head->hash);
 			head->next = NULL;
 			head->prev = NULL;
 			end = head;
 		}else{
 			struct node *temp = (struct node*)malloc(sizeof(struct node));
-			get_sha1_hash(data, 20, temp->hash);
+			get_sha1_hash(data, 64, temp->hash);
 			end->next = temp;
 			temp->prev = end;
 			end = temp;
 		}
 		ptr += 64;
 	}
-	char *final = NULL;
-	while(head != NULL){
-		if(head->next == NULL){
-			final = head->hash;
-			break;
+	// printf("%s\n", "working till here");
+	
+	char *final;
+	if (sz == 0) {
+		head->hash = 0;
+		head->next = NULL;
+		head->prev = NULL;
+		end = head;
+		final = 0;
+	} else {
+		final = NULL;
+		while(head != NULL){
+			if(head->next == NULL){
+				final = head->hash;
+				break;
+			}
+			char *a = head->hash;
+			char *b = head->next->hash;
+			char *c = strcat(a, b);		
+			struct node *temp = (struct node*)malloc(sizeof(struct node));
+			get_sha1_hash(c, 20, temp->hash);
+			end->next = temp;
+			temp->prev = end;
+			end = temp;
+			head = head->next->next;
 		}
-		char *a = head->hash;
-		char *b = head->next->hash;
-		char *c = strcat(a, b);		
-		struct node *temp = (struct node*)malloc(sizeof(struct node));
-		get_sha1_hash(c, 20, temp->hash);
-		end->next = temp;
-		temp->prev = end;
-		end = temp;
-		head = head->next->next;
 	}
 
-	return final;
-}
-
-/* Build an in-memory Merkle tree for the file.
- * Compare the integrity of file with respect to
- * root hash stored in secure.txt. If the file
- * doesn't exist, create an entry in secure.txt.
- * If an existing file is going to be truncated
- * update the hash in secure.txt.
- * returns -1 on failing the integrity check.
- */
-int s_open (const char *pathname, int flags, mode_t mode)
-{
-
-	FILE *fp = fopen(pathname, "r");
-	fseek(fp, 0L, SEEK_END);
-	int sz = ftell(fp);
-	fseek(fp, 0L, SEEK_SET);
-	fclose(fp);
-
-	int fd = open(pathname, flags, mode);
-	char *filehash = create_merkel_tree(fd, sz);
 	FILE *fp1 = fopen("secure.txt", "a+");
 	char *line = NULL;
 	size_t len = 0;
 	ssize_t read = 0;
+	int has_file = 0;
 	while ((read = getline(&line, &len, fp1)) != -1){
 		char *name = NULL;
 		char *hash = NULL;
@@ -110,17 +104,60 @@ int s_open (const char *pathname, int flags, mode_t mode)
 			hash++;
 		}
 
-		if(!strcmp(pathname, name)){
-			if(strcmp(hash, filehash) != 0){
+		if(!strcmp(filepath, name)){
+			has_file = 1;
+			if(strcmp(hash, final) != 0){
 				return -1;
 			}else{
-				return 0;
+				if (node_arr[fp] == NULL) {
+					node_arr[fp] = (struct node *)malloc(sizeof(struct node));
+				}
+				node_arr[fp] = head;
 			}
 		}
 	}
 
+	if (!has_file) {
+		fprintf(fp1, "%s ", filepath);
+		fprintf(fp1, "%s\n", final);
+	}
+
+	return 1;
+}
+
+/* Build an in-memory Merkle tree for the file.
+ * Compare the integrity of file with respect to
+ * root hash stored in secure.txt. If the file
+ * doesn't exist, create an entry in secure.txt.
+ * If an existing file is going to be truncated
+ * update the hash in secure.txt.
+ * returns -1 on failing the integrity check.
+ */
+int s_open (const char *pathname, int flags, mode_t mode)
+{
+
+	FILE *fp = fopen(pathname, "r");
+	int sz = 0;
+	if (fp == NULL) {
+		printf("%s\n", "unable to open file");
+	} else {
+		fseek(fp, 0L, SEEK_END);
+		// printf("%s\n", "hel");
+		sz = ftell(fp);
+		fseek(fp, 0L, SEEK_SET);
+		fclose(fp);
+	}
+	
+	int fd = open(pathname, flags, mode);
+	printf("%d\n", fd);
+	int filehash = create_merkel_tree(pathname, fd, sz);
+	printf("%s\n", "working");
+	if (filehash == -1) {
+		return -1;
+	}
+
 	assert (filesys_inited);
-	return open (pathname, flags, mode);
+	return fd;
 }
 
 /* SEEK_END should always return the file size 
@@ -169,10 +206,9 @@ int s_close (int fd)
  */
 int filesys_init (void)
 {
+	for(int i = 0; i < 1024; i++){
+		node_arr[i] = NULL;
+	}
 	filesys_inited = 1;
-	return 0;
-}
-
-int main(){
 	return 0;
 }

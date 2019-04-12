@@ -63,7 +63,7 @@ int main ()
 {
 	int i;
 	char filename[32];
-
+	
 	system ("rm -rf foo*.txt");
 
 	if (filesys_init() == 1) {
