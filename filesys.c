@@ -52,7 +52,7 @@ char* create_merkel_tree(int fp, int sz){
 		}
 		ptr += 64;
 	}
-	char *final;
+	char *final = NULL;
 	while(head != NULL){
 		if(head->next == NULL){
 			final = head->hash;
@@ -91,12 +91,13 @@ int s_open (const char *pathname, int flags, mode_t mode)
 
 	int fd = open(pathname, flags, mode);
 	char *filehash = create_merkel_tree(fd, sz);
-	FILE *fp = fopen("secure.txt", "a+");
-	char line[1000];
+	FILE *fp1 = fopen("secure.txt", "a+");
+	char *line = NULL;
 	size_t len = 0;
-	while ((read = getline(&line, &len, fp)) != -1){
-		char *name;
-		char *hash;
+	ssize_t read = 0;
+	while ((read = getline(&line, &len, fp1)) != -1){
+		char *name = NULL;
+		char *hash = NULL;
 		while(*line != ' '){
 			*name = *line;
 			name++;
