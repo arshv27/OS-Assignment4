@@ -56,7 +56,7 @@ int create_merkel_tree(const char *filepath, int fp, int sz){
 		}
 		ptr += 64;
 	}
-	// printf("%s\n", "working till here");
+	
 	
 	char *final;
 	if (sz == 0) {
@@ -83,27 +83,16 @@ int create_merkel_tree(const char *filepath, int fp, int sz){
 			head = head->next->next;
 		}
 	}
-
+	//printf("%s\n", "working till here");
 	FILE *fp1 = fopen("secure.txt", "a+");
 	char *line = NULL;
 	size_t len = 0;
 	ssize_t read = 0;
 	int has_file = 0;
 	while ((read = getline(&line, &len, fp1)) != -1){
-		char *name = NULL;
-		char *hash = NULL;
-		while(*line != ' '){
-			*name = *line;
-			name++;
-			line++;
-		}
-		line++;
-		while(*line != '\0'){
-			*hash = *line;
-			line++;
-			hash++;
-		}
-
+		printf("%s\n", "WORKING");
+		char *name = strtok(line, " ");
+		char *hash = strtok(NULL, " ");
 		if(!strcmp(filepath, name)){
 			has_file = 1;
 			if(strcmp(hash, final) != 0){
@@ -116,7 +105,7 @@ int create_merkel_tree(const char *filepath, int fp, int sz){
 			}
 		}
 	}
-
+	// printf("%s\n", "working till here");
 	if (!has_file) {
 		fprintf(fp1, "%s ", filepath);
 		fprintf(fp1, "%s\n", final);
