@@ -29,6 +29,8 @@ void get_sha1_hash (const void *buf, int len, const void *sha1)
 	// printf("%s\n", buf);
 	// printf("%s\n", "before hash");
 	SHA1 ((unsigned char*)buf, len, (unsigned char*)sha1);
+	// printf("%s\n", buf);
+	// printf("%s\n", sha1);
 	// printf("%s\n", "after hash");
 }
 
@@ -50,9 +52,10 @@ int create_merkel_tree(const char *filepath, int fp, int sz){
 			// printf("%s\n", "error in read");
 		}
 		if(ptr == 0){
-			if (data == NULL) {
-				head->hash = 0;
+			if (data == NULL || !strcmp(data,"0")) {
+				head->hash = "0";
 			} else {
+				// printf("%s\n", data);
 				get_sha1_hash(data, 64, head->hash);
 			}
 			head->next = NULL;
@@ -63,8 +66,8 @@ int create_merkel_tree(const char *filepath, int fp, int sz){
 			struct node *temp = (struct node*)malloc(sizeof(struct node));
 			// printf("%s\n", "after malloc");
 			// temp->hash = (char *)malloc(sizeof(char));
-			if (data == NULL) {
-				temp->hash = 0;
+			if (data == NULL || !strcmp(data,"0")) {
+				temp->hash = "0";
 			} else {
 				get_sha1_hash(data, 64, temp->hash);
 			}
@@ -78,7 +81,7 @@ int create_merkel_tree(const char *filepath, int fp, int sz){
 	
 	char *final;
 	if (sz == 0) {
-		head->hash = 0;
+		head->hash = "0";
 		head->next = NULL;
 		head->prev = NULL;
 		end = head;
@@ -99,15 +102,16 @@ int create_merkel_tree(const char *filepath, int fp, int sz){
 			char *b = head->next->hash;
 			// printf("%s\n", a);
 			// printf("%s\n", b);
-			if (a == NULL && b == NULL) {
-				a = NULL;
+			if (!strcmp(a,"0") && !strcmp(b,"0")) {
+				a = "0";
 			} else {
 				strcat(a, b);
 			}
 			// printf("%s\n", "after strcat");
 			struct node *temp = (struct node*)malloc(sizeof(struct node));
-			if (a == NULL) {
-				temp->hash = 0;
+			if (!strcmp(a,"0")) {
+				temp->hash = "0";
+				// printf("%s\n", temp->hash);
 			} else {
 				get_sha1_hash(a, 64, temp->hash);
 			}
