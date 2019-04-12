@@ -102,7 +102,7 @@ int create_merkel_tree(const char *filepath, int fp, int sz){
 			if (a == NULL && b == NULL) {
 				a = NULL;
 			} else {
-				strcat(a, b);	
+				strcat(a, b);
 			}
 			// printf("%s\n", "after strcat");
 			struct node *temp = (struct node*)malloc(sizeof(struct node));

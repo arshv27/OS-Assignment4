@@ -66,6 +66,8 @@ int main ()
 		snprintf (filename, 32, "foo_%d.txt", i);
 		ret = open_file (filename);
 		if ((ret == 0 && i != corrupt_idx) || (ret == 1 && i == corrupt_idx)) {
+			// printf("%d\n", corrupt_idx);
+			// printf("%d\n", i);
 			printf ("open test failed\n");
 			return 0;
 		}
