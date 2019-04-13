@@ -41,10 +41,20 @@ int create_merkel_tree(const char *filepath, int fp, int sz){
 
 	int ptr = 0;
 	// printf("%d\n", sz);
-	while(ptr < sz){
-
+	while(sz > ptr){
 		char *data = malloc(64);
-		read(fp, data, 64);
+		printf("%d\n", sz-ptr );
+		if (sz-ptr>=64){
+			// printf("%s %d\n","ptr before: ", ptr );
+			read(fp, data, 64);
+			// printf("%s %d\n","ptr before: ", ptr );
+		}
+		else{
+			read(fp,data,sz-ptr);
+			for( int i=0; i<64-sz+ptr; i++) {
+				read('a',data,1);
+			}			
+		}
 		if(ptr == 0){
 			head->hash = malloc(21);
 			get_sha1_hash(data, 64, head->hash);
