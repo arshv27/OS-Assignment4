@@ -35,7 +35,7 @@ void get_sha1_hash (const void *buf, int len, const void *sha1)
 }
 
 int create_merkel_tree(const char *filepath, int fp, int sz){
-	printf("%s\n", "running merkel tree");
+	// printf("%s\n", "running merkel tree");
 	struct node* head = (struct node*)malloc(sizeof(struct node));
 	struct node* end = (struct node*)malloc(sizeof(struct node));
 
@@ -43,15 +43,8 @@ int create_merkel_tree(const char *filepath, int fp, int sz){
 	// printf("%d\n", sz);
 	while(ptr < sz){
 
-		char *data = malloc(65*sizeof(char));
-		if(sz - ptr < 64){
-			read(fp, data, sz - ptr);
-		}else{
-			// printf("%s\n", "before read");
-			read(fp, data, 64);
-			// printf("%d\n", c);
-			// printf("%s\n", "error in read");
-		}
+		char *data = malloc(64);
+		read(fp, data, 64);
 		if(ptr == 0){
 			head->hash = malloc(21);
 			get_sha1_hash(data, 64, head->hash);
@@ -71,7 +64,7 @@ int create_merkel_tree(const char *filepath, int fp, int sz){
 		}
 		ptr += 64;
 	}
-	printf("%s\n", "data blocks converted to hash");
+	// printf("%s\n", "data blocks converted to hash");
 	// exit(0);
 	char *final = (char *)malloc(21);
 	if (sz == 0) {
@@ -79,41 +72,52 @@ int create_merkel_tree(const char *filepath, int fp, int sz){
 		head->next = NULL;
 		head->prev = NULL;
 		end = head;
+		printf("%s\n", "file size is 0");
 		final = "0";
 		// printf("%s\n", "working till here");
 	} else {
+		printf("%s\n", "file size is not 0");
+	
 		// printf("%d\n", sz);
-		printf("%s\n", "working till here");
+		// printf("%s\n", "working till here");
 		while(head != NULL){
 			// printf("%s\n", "working till here");
 			if(head->next == NULL){
-				printf("%s\n", "breaking out of loop");
+				// printf("%s\n", "breaking out of loop");
 				final = head->hash;
 				break;
 			}
-			char *a1 = head->hash;
-			char *b1 = head->next->hash;
-			// printf("%s\n", a);
-			// printf("%s\n", b);
+			// printf("%s\n", "getting a and b");
+			char *a = head->hash;
+			char *b = head->next->hash;
+			char *c = malloc(41);
+			// printf("%s\n", "after getting a and b");
+			// printf("%s %s\n", "A: ", a);
+			// printf("%s %s\n", "B: ", b);
 			// printf("%s\n", "before strcar");
-			
-			char *a = malloc(21);
-			char *b = malloc(21);
-			a = strtok(a1, "\0");
-			b = strtok(b1, "\0");
-			printf("%s\n", a);
-			strcat(a,b);
+			strcat(c,a);
+			strcat(c,b);
+			// printf("%s %s\n", "A after concatenation ", c);
+
+			int length = 0; 
+			while (*c != '\0') { 
+				length++; 
+				c++; 
+			}
+			// printf("%s %d\n", "length of a after concatenation: ", length);
 			// printf("%s\n", "after strcat");
 			struct node *temp = (struct node*)malloc(sizeof(struct node));
 			temp->hash = (char *)malloc(21);
-			get_sha1_hash(a, 42, temp->hash);
+			get_sha1_hash(c, 40, temp->hash);
+			// printf("%s\n", "After calculating sha");
 			end->next = temp;
 			temp->prev = end;
 			end = temp;
 			head = head->next->next;
+			// printf("%s\n", "end of this iteration");
 		}
 	}
-	printf("%s\n", "before secure.txt");
+	// printf("%s\n", "before secure.txt");
 	int has_file = 0;
 	if (access("secure.txt", F_OK) == -1) {
 		printf("%s\n", "secure.txt doesn't exist");
@@ -131,7 +135,7 @@ int create_merkel_tree(const char *filepath, int fp, int sz){
 			char *name = strtok(line, " ");
 			char *hash1 = strtok(NULL, " ");
 			char *hash = strtok(hash1, "\n");
-			printf("%s\n", name);
+			// printf("%s\n", name);
 
 			// printf("%s\n", "one");
 			// printf("%s\n", hash);
@@ -142,11 +146,12 @@ int create_merkel_tree(const char *filepath, int fp, int sz){
 				has_file = 1;
 				// printf("%s\n", hash);
 				// printf("%s\n", final);
-				if(strcmp(hash, final) != 0){
+				if(strcmp(hash, final) != 0 && strcmp(hash, "0") != 0){
 					// printf("%s\n", "error");
 					return -1;
 				}else{
 					// printf("%s\n", "no error");
+					// printf("%d\n", fp);
 					if (node_arr[fp] == NULL) {
 						node_arr[fp] = (struct node *)malloc(sizeof(struct node));
 					}
@@ -162,7 +167,7 @@ int create_merkel_tree(const char *filepath, int fp, int sz){
 	// printf("%s\n", "working till here");
 	if (!has_file) {
 		FILE *fp1 = fopen("secure.txt", "a");
-		printf("%s %s\n", "writing to file", filepath);
+		// printf("%s %s\n", "writing to file", filepath);
 		fprintf(fp1, "%s ", filepath);
 		if (final == NULL) {
 			fprintf(fp1, "%s\n", "0");
@@ -201,9 +206,9 @@ int s_open (const char *pathname, int flags, mode_t mode)
 	int fd = open(pathname, flags, mode);
 	// printf("%d\n", fd);
 	// printf("%s\n", "started running");
-	printf("'%s %s'\n", "pathname", pathname);
-	printf("%s %d\n", "fd", fd);
-	printf("%s %d\n", "size", sz);
+	// printf("'%s %s'\n", "pathname", pathname);
+	// printf("%s %d\n", "fd", fd);
+	// printf("%s %d\n", "size", sz);
 	int filehash = create_merkel_tree(pathname, fd, sz);
 	// printf("%s\n", "running perfectly");
 	if (filehash == -1) {

@@ -50,6 +50,7 @@ int main_loop (char *filename)
 		size = (total_size > 128) ? 128 : total_size;
 		ret = s_read (fd2, buf, size);
 		if (ret != size) {
+			printf("%d %d\n", size, ret);
 			printf ("Unable to read from file %d\n", ret);
 			return 0;
 		}
