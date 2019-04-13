@@ -1,0 +1,919 @@
+./base
+'pathname foo_0.txt'
+fd 3
+size 0
+running merkel tree
+data blocks converted to hash
+before secure.txt
+foo_0.txt
+foo_1.txt
+foo_2.txt
+foo_3.txt
+foo_4.txt
+foo_5.txt
+foo_6.txt
+foo_7.txt
+'pathname foo_0.txt'
+fd 3
+size 128000
+running merkel tree
+data blocks converted to hash
+working till here
+breaking out of loop
+before secure.txt
+foo_0.txt
+Unable to open file descriptor2
+'pathname foo_1.txt'
+fd 5
+size 0
+running merkel tree
+data blocks converted to hash
+before secure.txt
+foo_0.txt
+foo_1.txt
+foo_2.txt
+foo_3.txt
+foo_4.txt
+foo_5.txt
+foo_6.txt
+foo_7.txt
+'pathname foo_1.txt'
+fd 5
+size 128000
+running merkel tree
+data blocks converted to hash
+working till here
+breaking out of loop
+before secure.txt
+foo_0.txt
+foo_1.txt
+Unable to open file descriptor2
+'pathname foo_2.txt'
+fd 7
+size 0
+running merkel tree
+data blocks converted to hash
+before secure.txt
+foo_0.txt
+foo_1.txt
+foo_2.txt
+foo_3.txt
+foo_4.txt
+foo_5.txt
+foo_6.txt
+foo_7.txt
+'pathname foo_2.txt'
+fd 7
+size 128000
+running merkel tree
+data blocks converted to hash
+working till here
+breaking out of loop
+before secure.txt
+foo_0.txt
+foo_1.txt
+foo_2.txt
+Unable to open file descriptor2
+'pathname foo_3.txt'
+fd 9
+size 0
+running merkel tree
+data blocks converted to hash
+before secure.txt
+foo_0.txt
+foo_1.txt
+foo_2.txt
+foo_3.txt
+foo_4.txt
+foo_5.txt
+foo_6.txt
+foo_7.txt
+'pathname foo_3.txt'
+fd 9
+size 128000
+running merkel tree
+data blocks converted to hash
+working till here
+breaking out of loop
+before secure.txt
+foo_0.txt
+foo_1.txt
+foo_2.txt
+foo_3.txt
+Unable to open file descriptor2
+'pathname foo_4.txt'
+fd 11
+size 0
+running merkel tree
+data blocks converted to hash
+before secure.txt
+foo_0.txt
+foo_1.txt
+foo_2.txt
+foo_3.txt
+foo_4.txt
+foo_5.txt
+foo_6.txt
+foo_7.txt
+'pathname foo_4.txt'
+fd 11
+size 128000
+running merkel tree
+data blocks converted to hash
+working till here
+breaking out of loop
+before secure.txt
+foo_0.txt
+foo_1.txt
+foo_2.txt
+foo_3.txt
+foo_4.txt
+Unable to open file descriptor2
+'pathname foo_5.txt'
+fd 13
+size 0
+running merkel tree
+data blocks converted to hash
+before secure.txt
+foo_0.txt
+foo_1.txt
+foo_2.txt
+foo_3.txt
+foo_4.txt
+foo_5.txt
+foo_6.txt
+foo_7.txt
+'pathname foo_5.txt'
+fd 13
+size 128000
+running merkel tree
+data blocks converted to hash
+working till here
+breaking out of loop
+before secure.txt
+foo_0.txt
+foo_1.txt
+foo_2.txt
+foo_3.txt
+foo_4.txt
+foo_5.txt
+Unable to open file descriptor2
+'pathname foo_6.txt'
+fd 15
+size 0
+running merkel tree
+data blocks converted to hash
+before secure.txt
+foo_0.txt
+foo_1.txt
+foo_2.txt
+foo_3.txt
+foo_4.txt
+foo_5.txt
+foo_6.txt
+foo_7.txt
+'pathname foo_6.txt'
+fd 15
+size 128000
+running merkel tree
+data blocks converted to hash
+working till here
+breaking out of loop
+before secure.txt
+foo_0.txt
+foo_1.txt
+foo_2.txt
+foo_3.txt
+foo_4.txt
+foo_5.txt
+foo_6.txt
+Unable to open file descriptor2
+'pathname foo_7.txt'
+fd 17
+size 0
+running merkel tree
+data blocks converted to hash
+before secure.txt
+foo_0.txt
+foo_1.txt
+foo_2.txt
+foo_3.txt
+foo_4.txt
+foo_5.txt
+foo_6.txt
+foo_7.txt
+'pathname foo_7.txt'
+fd 17
+size 128000
+running merkel tree
+data blocks converted to hash
+working till here
+breaking out of loop
+before secure.txt
+foo_0.txt
+foo_1.txt
+foo_2.txt
+foo_3.txt
+foo_4.txt
+foo_5.txt
+foo_6.txt
+foo_7.txt
+Unable to open file descriptor2
+./testcase1
+'pathname foo_0.txt'
+fd 3
+size 128000
+running merkel tree
+data blocks converted to hash
+working till here
+breaking out of loop
+before secure.txt
+foo_0.txt
+open test failed
+./base
+'pathname foo_0.txt'
+fd 3
+size 0
+running merkel tree
+data blocks converted to hash
+before secure.txt
+foo_0.txt
+foo_1.txt
+foo_2.txt
+foo_3.txt
+foo_4.txt
+foo_5.txt
+foo_6.txt
+foo_7.txt
+'pathname foo_0.txt'
+fd 3
+size 128000
+running merkel tree
+data blocks converted to hash
+working till here
+breaking out of loop
+before secure.txt
+foo_0.txt
+Unable to open file descriptor2
+'pathname foo_1.txt'
+fd 5
+size 0
+running merkel tree
+data blocks converted to hash
+before secure.txt
+foo_0.txt
+foo_1.txt
+foo_2.txt
+foo_3.txt
+foo_4.txt
+foo_5.txt
+foo_6.txt
+foo_7.txt
+'pathname foo_1.txt'
+fd 5
+size 128000
+running merkel tree
+data blocks converted to hash
+working till here
+breaking out of loop
+before secure.txt
+foo_0.txt
+foo_1.txt
+Unable to open file descriptor2
+'pathname foo_2.txt'
+fd 7
+size 0
+running merkel tree
+data blocks converted to hash
+before secure.txt
+foo_0.txt
+foo_1.txt
+foo_2.txt
+foo_3.txt
+foo_4.txt
+foo_5.txt
+foo_6.txt
+foo_7.txt
+'pathname foo_2.txt'
+fd 7
+size 128000
+running merkel tree
+data blocks converted to hash
+working till here
+breaking out of loop
+before secure.txt
+foo_0.txt
+foo_1.txt
+foo_2.txt
+Unable to open file descriptor2
+'pathname foo_3.txt'
+fd 9
+size 0
+running merkel tree
+data blocks converted to hash
+before secure.txt
+foo_0.txt
+foo_1.txt
+foo_2.txt
+foo_3.txt
+foo_4.txt
+foo_5.txt
+foo_6.txt
+foo_7.txt
+'pathname foo_3.txt'
+fd 9
+size 128000
+running merkel tree
+data blocks converted to hash
+working till here
+breaking out of loop
+before secure.txt
+foo_0.txt
+foo_1.txt
+foo_2.txt
+foo_3.txt
+Unable to open file descriptor2
+'pathname foo_4.txt'
+fd 11
+size 0
+running merkel tree
+data blocks converted to hash
+before secure.txt
+foo_0.txt
+foo_1.txt
+foo_2.txt
+foo_3.txt
+foo_4.txt
+foo_5.txt
+foo_6.txt
+foo_7.txt
+'pathname foo_4.txt'
+fd 11
+size 128000
+running merkel tree
+data blocks converted to hash
+working till here
+breaking out of loop
+before secure.txt
+foo_0.txt
+foo_1.txt
+foo_2.txt
+foo_3.txt
+foo_4.txt
+Unable to open file descriptor2
+'pathname foo_5.txt'
+fd 13
+size 0
+running merkel tree
+data blocks converted to hash
+before secure.txt
+foo_0.txt
+foo_1.txt
+foo_2.txt
+foo_3.txt
+foo_4.txt
+foo_5.txt
+foo_6.txt
+foo_7.txt
+'pathname foo_5.txt'
+fd 13
+size 128000
+running merkel tree
+data blocks converted to hash
+working till here
+breaking out of loop
+before secure.txt
+foo_0.txt
+foo_1.txt
+foo_2.txt
+foo_3.txt
+foo_4.txt
+foo_5.txt
+Unable to open file descriptor2
+'pathname foo_6.txt'
+fd 15
+size 0
+running merkel tree
+data blocks converted to hash
+before secure.txt
+foo_0.txt
+foo_1.txt
+foo_2.txt
+foo_3.txt
+foo_4.txt
+foo_5.txt
+foo_6.txt
+foo_7.txt
+'pathname foo_6.txt'
+fd 15
+size 128000
+running merkel tree
+data blocks converted to hash
+working till here
+breaking out of loop
+before secure.txt
+foo_0.txt
+foo_1.txt
+foo_2.txt
+foo_3.txt
+foo_4.txt
+foo_5.txt
+foo_6.txt
+Unable to open file descriptor2
+'pathname foo_7.txt'
+fd 17
+size 0
+running merkel tree
+data blocks converted to hash
+before secure.txt
+foo_0.txt
+foo_1.txt
+foo_2.txt
+foo_3.txt
+foo_4.txt
+foo_5.txt
+foo_6.txt
+foo_7.txt
+'pathname foo_7.txt'
+fd 17
+size 128000
+running merkel tree
+data blocks converted to hash
+working till here
+breaking out of loop
+before secure.txt
+foo_0.txt
+foo_1.txt
+foo_2.txt
+foo_3.txt
+foo_4.txt
+foo_5.txt
+foo_6.txt
+foo_7.txt
+Unable to open file descriptor2
+./testcase2
+'pathname foo_0.txt'
+fd 3
+size 128000
+running merkel tree
+data blocks converted to hash
+working till here
+breaking out of loop
+before secure.txt
+foo_0.txt
+open failed
+./base
+'pathname foo_0.txt'
+fd 3
+size 0
+running merkel tree
+data blocks converted to hash
+before secure.txt
+foo_0.txt
+foo_1.txt
+foo_2.txt
+foo_3.txt
+foo_4.txt
+foo_5.txt
+foo_6.txt
+foo_7.txt
+'pathname foo_0.txt'
+fd 3
+size 128000
+running merkel tree
+data blocks converted to hash
+working till here
+breaking out of loop
+before secure.txt
+foo_0.txt
+Unable to open file descriptor2
+'pathname foo_1.txt'
+fd 5
+size 0
+running merkel tree
+data blocks converted to hash
+before secure.txt
+foo_0.txt
+foo_1.txt
+foo_2.txt
+foo_3.txt
+foo_4.txt
+foo_5.txt
+foo_6.txt
+foo_7.txt
+'pathname foo_1.txt'
+fd 5
+size 128000
+running merkel tree
+data blocks converted to hash
+working till here
+breaking out of loop
+before secure.txt
+foo_0.txt
+foo_1.txt
+Unable to open file descriptor2
+'pathname foo_2.txt'
+fd 7
+size 0
+running merkel tree
+data blocks converted to hash
+before secure.txt
+foo_0.txt
+foo_1.txt
+foo_2.txt
+foo_3.txt
+foo_4.txt
+foo_5.txt
+foo_6.txt
+foo_7.txt
+'pathname foo_2.txt'
+fd 7
+size 128000
+running merkel tree
+data blocks converted to hash
+working till here
+breaking out of loop
+before secure.txt
+foo_0.txt
+foo_1.txt
+foo_2.txt
+Unable to open file descriptor2
+'pathname foo_3.txt'
+fd 9
+size 0
+running merkel tree
+data blocks converted to hash
+before secure.txt
+foo_0.txt
+foo_1.txt
+foo_2.txt
+foo_3.txt
+foo_4.txt
+foo_5.txt
+foo_6.txt
+foo_7.txt
+'pathname foo_3.txt'
+fd 9
+size 128000
+running merkel tree
+data blocks converted to hash
+working till here
+breaking out of loop
+before secure.txt
+foo_0.txt
+foo_1.txt
+foo_2.txt
+foo_3.txt
+Unable to open file descriptor2
+'pathname foo_4.txt'
+fd 11
+size 0
+running merkel tree
+data blocks converted to hash
+before secure.txt
+foo_0.txt
+foo_1.txt
+foo_2.txt
+foo_3.txt
+foo_4.txt
+foo_5.txt
+foo_6.txt
+foo_7.txt
+'pathname foo_4.txt'
+fd 11
+size 128000
+running merkel tree
+data blocks converted to hash
+working till here
+breaking out of loop
+before secure.txt
+foo_0.txt
+foo_1.txt
+foo_2.txt
+foo_3.txt
+foo_4.txt
+Unable to open file descriptor2
+'pathname foo_5.txt'
+fd 13
+size 0
+running merkel tree
+data blocks converted to hash
+before secure.txt
+foo_0.txt
+foo_1.txt
+foo_2.txt
+foo_3.txt
+foo_4.txt
+foo_5.txt
+foo_6.txt
+foo_7.txt
+'pathname foo_5.txt'
+fd 13
+size 128000
+running merkel tree
+data blocks converted to hash
+working till here
+breaking out of loop
+before secure.txt
+foo_0.txt
+foo_1.txt
+foo_2.txt
+foo_3.txt
+foo_4.txt
+foo_5.txt
+Unable to open file descriptor2
+'pathname foo_6.txt'
+fd 15
+size 0
+running merkel tree
+data blocks converted to hash
+before secure.txt
+foo_0.txt
+foo_1.txt
+foo_2.txt
+foo_3.txt
+foo_4.txt
+foo_5.txt
+foo_6.txt
+foo_7.txt
+'pathname foo_6.txt'
+fd 15
+size 128000
+running merkel tree
+data blocks converted to hash
+working till here
+breaking out of loop
+before secure.txt
+foo_0.txt
+foo_1.txt
+foo_2.txt
+foo_3.txt
+foo_4.txt
+foo_5.txt
+foo_6.txt
+Unable to open file descriptor2
+'pathname foo_7.txt'
+fd 17
+size 0
+running merkel tree
+data blocks converted to hash
+before secure.txt
+foo_0.txt
+foo_1.txt
+foo_2.txt
+foo_3.txt
+foo_4.txt
+foo_5.txt
+foo_6.txt
+foo_7.txt
+'pathname foo_7.txt'
+fd 17
+size 128000
+running merkel tree
+data blocks converted to hash
+working till here
+breaking out of loop
+before secure.txt
+foo_0.txt
+foo_1.txt
+foo_2.txt
+foo_3.txt
+foo_4.txt
+foo_5.txt
+foo_6.txt
+foo_7.txt
+Unable to open file descriptor2
+./testcase3
+'pathname foo_0.txt'
+fd 4
+size 128000
+running merkel tree
+data blocks converted to hash
+working till here
+breaking out of loop
+before secure.txt
+foo_0.txt
+Unable to open file descriptor2
+./base
+'pathname foo_0.txt'
+fd 3
+size 0
+running merkel tree
+data blocks converted to hash
+before secure.txt
+foo_0.txt
+foo_1.txt
+foo_2.txt
+foo_3.txt
+foo_4.txt
+foo_5.txt
+foo_6.txt
+foo_7.txt
+'pathname foo_0.txt'
+fd 3
+size 128000
+running merkel tree
+data blocks converted to hash
+working till here
+breaking out of loop
+before secure.txt
+foo_0.txt
+Unable to open file descriptor2
+'pathname foo_1.txt'
+fd 5
+size 0
+running merkel tree
+data blocks converted to hash
+before secure.txt
+foo_0.txt
+foo_1.txt
+foo_2.txt
+foo_3.txt
+foo_4.txt
+foo_5.txt
+foo_6.txt
+foo_7.txt
+'pathname foo_1.txt'
+fd 5
+size 128000
+running merkel tree
+data blocks converted to hash
+working till here
+breaking out of loop
+before secure.txt
+foo_0.txt
+foo_1.txt
+Unable to open file descriptor2
+'pathname foo_2.txt'
+fd 7
+size 0
+running merkel tree
+data blocks converted to hash
+before secure.txt
+foo_0.txt
+foo_1.txt
+foo_2.txt
+foo_3.txt
+foo_4.txt
+foo_5.txt
+foo_6.txt
+foo_7.txt
+'pathname foo_2.txt'
+fd 7
+size 128000
+running merkel tree
+data blocks converted to hash
+working till here
+breaking out of loop
+before secure.txt
+foo_0.txt
+foo_1.txt
+foo_2.txt
+Unable to open file descriptor2
+'pathname foo_3.txt'
+fd 9
+size 0
+running merkel tree
+data blocks converted to hash
+before secure.txt
+foo_0.txt
+foo_1.txt
+foo_2.txt
+foo_3.txt
+foo_4.txt
+foo_5.txt
+foo_6.txt
+foo_7.txt
+'pathname foo_3.txt'
+fd 9
+size 128000
+running merkel tree
+data blocks converted to hash
+working till here
+breaking out of loop
+before secure.txt
+foo_0.txt
+foo_1.txt
+foo_2.txt
+foo_3.txt
+Unable to open file descriptor2
+'pathname foo_4.txt'
+fd 11
+size 0
+running merkel tree
+data blocks converted to hash
+before secure.txt
+foo_0.txt
+foo_1.txt
+foo_2.txt
+foo_3.txt
+foo_4.txt
+foo_5.txt
+foo_6.txt
+foo_7.txt
+'pathname foo_4.txt'
+fd 11
+size 128000
+running merkel tree
+data blocks converted to hash
+working till here
+breaking out of loop
+before secure.txt
+foo_0.txt
+foo_1.txt
+foo_2.txt
+foo_3.txt
+foo_4.txt
+Unable to open file descriptor2
+'pathname foo_5.txt'
+fd 13
+size 0
+running merkel tree
+data blocks converted to hash
+before secure.txt
+foo_0.txt
+foo_1.txt
+foo_2.txt
+foo_3.txt
+foo_4.txt
+foo_5.txt
+foo_6.txt
+foo_7.txt
+'pathname foo_5.txt'
+fd 13
+size 128000
+running merkel tree
+data blocks converted to hash
+working till here
+breaking out of loop
+before secure.txt
+foo_0.txt
+foo_1.txt
+foo_2.txt
+foo_3.txt
+foo_4.txt
+foo_5.txt
+Unable to open file descriptor2
+'pathname foo_6.txt'
+fd 15
+size 0
+running merkel tree
+data blocks converted to hash
+before secure.txt
+foo_0.txt
+foo_1.txt
+foo_2.txt
+foo_3.txt
+foo_4.txt
+foo_5.txt
+foo_6.txt
+foo_7.txt
+'pathname foo_6.txt'
+fd 15
+size 128000
+running merkel tree
+data blocks converted to hash
+working till here
+breaking out of loop
+before secure.txt
+foo_0.txt
+foo_1.txt
+foo_2.txt
+foo_3.txt
+foo_4.txt
+foo_5.txt
+foo_6.txt
+Unable to open file descriptor2
+'pathname foo_7.txt'
+fd 17
+size 0
+running merkel tree
+data blocks converted to hash
+before secure.txt
+foo_0.txt
+foo_1.txt
+foo_2.txt
+foo_3.txt
+foo_4.txt
+foo_5.txt
+foo_6.txt
+foo_7.txt
+'pathname foo_7.txt'
+fd 17
+size 128000
+running merkel tree
+data blocks converted to hash
+working till here
+breaking out of loop
+before secure.txt
+foo_0.txt
+foo_1.txt
+foo_2.txt
+foo_3.txt
+foo_4.txt
+foo_5.txt
+foo_6.txt
+foo_7.txt
+Unable to open file descriptor2
+./testcase4
+init filesys test failed

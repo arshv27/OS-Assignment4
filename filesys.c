@@ -94,16 +94,23 @@ int create_merkel_tree(const char *filepath, int fp, int sz){
 			char *a1 = head->hash;
 			char *b1 = head->next->hash;
 			// printf("%s\n", a);
-			// printf("%s\n", b);
+			// printf("b1 = %s\n", b1);
 			// printf("%s\n", "before strcar");
 			
 			char *a = malloc(21);
 			char *b = malloc(21);
 			a = strtok(a1, "\0");
 			b = strtok(b1, "\0");
-			printf("%s\n", a);
+			// printf("a = %s\n", a);
+			// printf("b = %s\n", b);
+			if(b == NULL){
+				b = a;
+			}
+			if(a == NULL){
+				a = b;
+			}
 			strcat(a,b);
-			// printf("%s\n", "after strcat");
+			// printf("after strcat a = %s\n", a);	
 			struct node *temp = (struct node*)malloc(sizeof(struct node));
 			temp->hash = (char *)malloc(21);
 			get_sha1_hash(a, 42, temp->hash);
