@@ -134,7 +134,7 @@ int create_merkel_tree(const char *filepath, int fp, int sz){
 			
 			char *name = strtok(line, " ");
 			char *hash1 = strtok(NULL, " ");
-			char *hash = strtok(hash1, "\n");
+			char *hash = strtok(hash1, " ");
 			// printf("%s\n", name);
 
 			// printf("%s\n", "one");
@@ -157,6 +157,9 @@ int create_merkel_tree(const char *filepath, int fp, int sz){
 					}
 					node_arr[fp] = head;
 				}
+				if(strcmp(hash, "0") == 0) {
+					has_file = 0;
+				}
 			}
 			// printf("%s\n", "end of while loop");
 		}
@@ -165,15 +168,11 @@ int create_merkel_tree(const char *filepath, int fp, int sz){
 	}
 	// exit(0);
 	// printf("%s\n", "working till here");
-	if (!has_file) {
+	if (!has_file && strcmp(final, "0") != 0) {
 		FILE *fp1 = fopen("secure.txt", "a");
-		// printf("%s %s\n", "writing to file", filepath);
+		printf("%s %s\n", "writing to file", filepath);
 		fprintf(fp1, "%s ", filepath);
-		if (final == NULL) {
-			fprintf(fp1, "%s\n", "0");
-		} else {
-			fprintf(fp1, "%s\n", final);
-		}
+		fprintf(fp1, "%s \n", final);
 		fflush(fp1);
 		fclose(fp1);
 	}
@@ -248,7 +247,10 @@ ssize_t s_write (int fd, const void *buf, size_t count)
 ssize_t s_read (int fd, void *buf, size_t count)
 {
 	assert (filesys_inited);
-	return read (fd, buf, count);
+	lseek(fd, 0, SEEK_SET);
+	int c= read (fd, buf, count);
+	// printf("%s %d\n","bytes read:", c);
+	return c;
 }
 
 /* destroy the in-memory Merkle tree */
