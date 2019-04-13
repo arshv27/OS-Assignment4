@@ -43,43 +43,37 @@ int create_merkel_tree(const char *filepath, int fp, int sz){
 	// printf("%d\n", sz);
 	while(ptr < sz){
 
-		char *data = NULL;
+		char *data = malloc(65*sizeof(char));
 		if(sz - ptr < 64){
 			read(fp, data, sz - ptr);
 		}else{
 			// printf("%s\n", "before read");
 			read(fp, data, 64);
+			// printf("%d\n", c);
 			// printf("%s\n", "error in read");
 		}
 		if(ptr == 0){
-			if (data == NULL || !strcmp(data,"0")) {
-				head->hash = "0";
-			} else {
-				// printf("%s\n", data);
-				get_sha1_hash(data, 64, head->hash);
-			}
+			head->hash = malloc(21);
+			get_sha1_hash(data, 64, head->hash);
 			head->next = NULL;
 			head->prev = NULL;
 			end = head;
 		}else{
 			// printf("%d\n", ptr);
+			// printf("%s\n", "before malloc");
 			struct node *temp = (struct node*)malloc(sizeof(struct node));
 			// printf("%s\n", "after malloc");
-			// temp->hash = (char *)malloc(sizeof(char));
-			if (data == NULL || !strcmp(data,"0")) {
-				temp->hash = "0";
-			} else {
-				get_sha1_hash(data, 64, temp->hash);
-			}
+			temp->hash = (char *)malloc(21);
+			get_sha1_hash(data, 64, temp->hash);
 			end->next = temp;
 			temp->prev = end;
 			end = temp;
 		}
 		ptr += 64;
 	}
-	
+	printf("%s\n", "data blocks converted to hash");
 	// exit(0);
-	char *final = NULL;
+	char *final = (char *)malloc(21);
 	if (sz == 0) {
 		head->hash = "0";
 		head->next = NULL;
@@ -89,45 +83,37 @@ int create_merkel_tree(const char *filepath, int fp, int sz){
 		// printf("%s\n", "working till here");
 	} else {
 		// printf("%d\n", sz);
-		// printf("%s\n", "working till here");
+		printf("%s\n", "working till here");
 		while(head != NULL){
 			// printf("%s\n", "working till here");
 			if(head->next == NULL){
-				// printf("%s\n", "breaking out of loop");
+				printf("%s\n", "breaking out of loop");
 				final = head->hash;
-				if (final == NULL) {
-					final = "0";
-				}
 				break;
 			}
-			char *a = head->hash;
-			char *b = head->next->hash;
+			char *a1 = head->hash;
+			char *b1 = head->next->hash;
 			// printf("%s\n", a);
 			// printf("%s\n", b);
-			if (!strcmp(a,"0") && !strcmp(b,"0")) {
-				a = "0";
-			} else {
-				strcat(a, b);
-			}
+			// printf("%s\n", "before strcar");
+			
+			char *a = malloc(21);
+			char *b = malloc(21);
+			a = strtok(a1, "\0");
+			b = strtok(b1, "\0");
+			printf("%s\n", a);
+			strcat(a,b);
 			// printf("%s\n", "after strcat");
 			struct node *temp = (struct node*)malloc(sizeof(struct node));
-			if (!strcmp(a,"0")) {
-				temp->hash = "0";
-				// printf("%s\n", temp->hash);
-			} else {
-				get_sha1_hash(a, 64, temp->hash);
-			}
+			temp->hash = (char *)malloc(21);
+			get_sha1_hash(a, 42, temp->hash);
 			end->next = temp;
 			temp->prev = end;
 			end = temp;
 			head = head->next->next;
 		}
 	}
-
-	if (final == NULL) {
-		final = "0";
-	}
-	// printf("%s\n", "before secure.txt");
+	printf("%s\n", "before secure.txt");
 	int has_file = 0;
 	if (access("secure.txt", F_OK) == -1) {
 		printf("%s\n", "secure.txt doesn't exist");
