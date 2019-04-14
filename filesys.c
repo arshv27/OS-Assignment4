@@ -195,5 +195,67 @@ int s_close (int fd)
 int filesys_init (void)
 {
 	filesys_inited = 1;
-	return 0;
+	char arr[1024][31];
+	for (int i=0; i<1024; i++) {
+		arr[i][30]='\0';
+	}
+	if (access("secure.txt",F_OK) == -1) {
+		return 0;
+	}
+
+
+	FILE *fp = fopen("secure.txt", "r");
+	char *line = NULL;
+	size_t len = 0;
+	ssize_t read = 0;
+	int i = 0;
+	int flg = 0;
+	while ((read = getline(&line, &len, fp)) != -1) {
+		char *name = strtok(line, " ");
+		char *hash1 = strtok(NULL, " ");
+		char *hash = strtok(hash1, "\n");
+		if (access(name,F_OK) == -1) {
+			;
+		}else{
+			int y = merkel_tree(name, O_RDONLY, 0);
+			if (y != -1) {
+				for (int j = 0; j < 9; j++) {
+					arr[i][j] = name[j];
+				}
+				arr[i][9] = ' ';
+				for (int j = 10; j<30; j++) {
+					arr[i][j] = hash[j-10];
+				}
+				i++;
+			}
+			else {
+				flg=1;
+			}
+		}
+	}
+	fclose(fp);
+	remove("secure.txt");
+
+	FILE *fp1 = fopen("secure.txt", "a+");
+	// printf("%d\n", i);
+	for (int j=0; j<i; j++) {
+		char name[10];
+		name[9]='\0';
+		for (int k=0; k<9; k++) {
+			name[k] = arr[j][k];
+			// printf("%s\n",name );
+		}
+		char hasharr[21];
+		hasharr[20]='\0';
+		for (int k=10; k<30; k++) {
+			hasharr[k-10] = arr[j][k];
+		}
+		fprintf(fp1, "%s", name);
+		fprintf(fp1, "%s", " ");
+		fprintf(fp1, "%s\n", hasharr);
+		fflush(fp1);
+	}
+	fclose(fp1);
+
+	return flg;
 }
