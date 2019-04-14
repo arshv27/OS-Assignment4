@@ -30,7 +30,7 @@ int merkel_tree(const char *pathname, int flags, mode_t mode) {
 		//printf("null\n");
 		return 1;
 	}
-	printf("%d\n", sz);
+	// printf("%d\n", sz);
 
 	int fd = open(pathname, flags, mode);
 	int ptr = 0;
@@ -94,9 +94,11 @@ int merkel_tree(const char *pathname, int flags, mode_t mode) {
 	ssize_t read = 0;
 	while ((read = getline(&line, &len, fp1)) != -1) {
 		char *name = strtok(line, " ");
-		char *hash = strtok(NULL, " ");
+		char *hash1 = strtok(NULL, " ");
+		char *hash = strtok(hash1, "\n");
 		if (!strcmp(pathname, name)) {
 			has_file = 1;
+			// printf("%s ---%s\n", hash, data[0]);
 			if (strcmp(hash, data[0]) != 0) {
 				fclose(fp1);
 				return -1;
