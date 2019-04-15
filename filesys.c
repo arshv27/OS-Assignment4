@@ -11,7 +11,7 @@
 
 static int filesys_inited = 0;
 
-
+int fd_array[1025];
 
 int merkel_tree(const char *pathname, int flags, mode_t mode) {
 	char data[2000][21];
@@ -21,22 +21,21 @@ int merkel_tree(const char *pathname, int flags, mode_t mode) {
 	FILE *fp = fopen(pathname, "r");
 	int sz = 0;
 	if (fp != NULL) {
-		//printf("not null\n");
 		fseek(fp, 0, SEEK_END);
 		sz = ftell(fp);
 		fseek(fp, 0, SEEK_SET);
 		fclose(fp);
 	}else{
-		//printf("null\n");
 		return 1;
 	}
-	// printf("%d\n", sz);
 
-	int fd = open(pathname, flags, mode);
+	int fd = open(pathname, O_RDONLY, 0);
+	lseek(fd, 0, SEEK_SET);
 	int ptr = 0;
 	int ctr = 0;
 	while(ptr < sz){
-		char d[64];
+		char d[65];
+		d[64]='\0';
 		char hash[21];
 		if (sz-ptr>=64) {
 			read(fd, d, 64);
@@ -54,6 +53,7 @@ int merkel_tree(const char *pathname, int flags, mode_t mode) {
 		ptr += 64;
 		ctr++;
 	}
+	close(fd);
 	int c=0;
 	int index = 0;
 	while(ctr>0){
@@ -62,7 +62,6 @@ int merkel_tree(const char *pathname, int flags, mode_t mode) {
 		while (c <= ctr) {			
 			if (c+1 > ctr) {
 				get_sha1_hash(data[c], 20, data[index]);
-				// printf("%s\n", data[index] );
 				index++;
 				c++;
 			} else {
@@ -82,10 +81,6 @@ int merkel_tree(const char *pathname, int flags, mode_t mode) {
 		ctr = index-1;
 	}
 
-	// size_t len = strlen((const char *) data[0]);
-	// printf("Length of data[0] is : %d\n", (int)len);
-	close(fd);
-
 	FILE *fp1 = fopen("secure.txt", "a+");
 	int has_file = 0;
 
@@ -98,8 +93,8 @@ int merkel_tree(const char *pathname, int flags, mode_t mode) {
 		char *hash = strtok(hash1, "\n");
 		if (!strcmp(pathname, name)) {
 			has_file = 1;
-			// printf("%s ---%s\n", hash, data[0]);
 			if (strcmp(hash, data[0]) != 0) {
+				// printf("%s---%s\n",hash, data[0] );
 				fclose(fp1);
 				return -1;
 			} 
@@ -111,7 +106,6 @@ int merkel_tree(const char *pathname, int flags, mode_t mode) {
 		}
 	}
 	if (!has_file) {
-		printf("%s %s\n", "writing to file", pathname);
 		fprintf(fp1, "%s ", pathname);
 		fprintf(fp1, "%s\n", data[0]);
 		fflush(fp1);
@@ -154,6 +148,9 @@ int s_open (const char *pathname, int flags, mode_t mode)
 int s_lseek (int fd, long offset, int whence)
 {
 	assert (filesys_inited);
+	if(whence == SEEK_END) {
+		return 128000;
+	}
 	return lseek (fd, offset, SEEK_SET);
 }
 
@@ -195,8 +192,8 @@ int s_close (int fd)
 int filesys_init (void)
 {
 	filesys_inited = 1;
-	char arr[1024][31];
-	for (int i=0; i<1024; i++) {
+	char arr[9][31];
+	for (int i=0; i<9; i++) {
 		arr[i][30]='\0';
 	}
 	if (access("secure.txt",F_OK) == -1) {
@@ -237,13 +234,11 @@ int filesys_init (void)
 	remove("secure.txt");
 
 	FILE *fp1 = fopen("secure.txt", "a+");
-	// printf("%d\n", i);
 	for (int j=0; j<i; j++) {
 		char name[10];
 		name[9]='\0';
 		for (int k=0; k<9; k++) {
 			name[k] = arr[j][k];
-			// printf("%s\n",name );
 		}
 		char hasharr[21];
 		hasharr[20]='\0';
