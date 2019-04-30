@@ -36,8 +36,13 @@ int merkel_tree(const char *pathname, int flags, mode_t mode, int ff) {
 	if (fp != NULL) {
 		fseek(fp, 0, SEEK_END);
 		sz = ftell(fp);
+		printf("file name = %s, file size = %d\n", pathname, sz);
 		fseek(fp, 0, SEEK_SET);
 		fclose(fp);
+		if(sz == 0){
+			return 1;
+		}
+
 	}else{
 		return 1;
 	}
@@ -97,7 +102,7 @@ int merkel_tree(const char *pathname, int flags, mode_t mode, int ff) {
 		}
 		ctr = index-1;
 	}
-
+	printf("final hash is %s\n", data[0]);
 
 	if(ff){
 		char arr[9][31];
@@ -123,12 +128,15 @@ int merkel_tree(const char *pathname, int flags, mode_t mode, int ff) {
 		ssize_t read = 0;
 		int i = 0;
 		int flg = 0;
+		int hasfile = 0;
 		while ((read = getline(&line, &len, fp)) != -1) {
 			char *name = strtok(line, " ");
 			char *hash1 = strtok(NULL, " ");
 			char *hash = strtok(hash1, "\n");
+			flg = 0;
 			if(strcmp(name, pathname) == 0){
 				flg = 1;
+				hasfile = 1;
 			}
 
 			if (access(name,F_OK) == -1) {
@@ -149,26 +157,40 @@ int merkel_tree(const char *pathname, int flags, mode_t mode, int ff) {
 			}
 		}
 		fclose(fp);
-		remove("secure.txt");
+		if (hasfile) {
+			remove("secure.txt");
+		}
 
 		FILE *fp1 = fopen("secure.txt", "a+");
-		for (int j=0; j<i; j++) {
-			char name[10];
-			name[9]='\0';
-			for (int k=0; k<9; k++) {
-				name[k] = arr[j][k];
-			}
-			char hasharr[21];
-			hasharr[20]='\0';
-			for (int k=10; k<30; k++) {
-				hasharr[k-10] = arr[j][k];
-			}
 
-			fprintf(fp1, "%s", name);
+		if(!hasfile){
+			fprintf(fp1, "%s\n", pathname);
 			fprintf(fp1, "%s", " ");
-			fprintf(fp1, "%s\n", hasharr);
+			printf("%s\n", data[0]);
+			printf("%d\n", sz);
+			fprintf(fp1, "%s\n", data[0]);
 			fflush(fp1);
+		} else {
+
+			for (int j=0; j<i; j++) {
+				char name[10];
+				name[9]='\0';
+				for (int k=0; k<9; k++) {
+					name[k] = arr[j][k];
+				}
+				char hasharr[21];
+				hasharr[20]='\0';
+				for (int k=10; k<30; k++) {
+					hasharr[k-10] = arr[j][k];
+				}
+
+				fprintf(fp1, "%s", name);
+				fprintf(fp1, "%s", " ");
+				fprintf(fp1, "%s\n", hasharr);
+				fflush(fp1);
+			}
 		}
+
 		fclose(fp1);
 		return 1;
 	}
@@ -209,7 +231,9 @@ int merkel_tree(const char *pathname, int flags, mode_t mode, int ff) {
 			// printf("%s\n", hash_array[temp_fd][i]);
 		}
 		fprintf(fp1, "%s ", pathname);
+		printf("%s\n", data[0]);
 		fprintf(fp1, "%s\n", data[0]);
+		printf("%d\n", sz);
 		fflush(fp1);
 		fclose(fp1);
 	}
