@@ -14,22 +14,22 @@ int main_loop (char *filename)
 	int fd1, fd2;
 	char buf[128];
 	int size, total_size, ret;
-
+	
 	fd1 = s_open (filename, O_CREAT|O_WRONLY, S_IRUSR|S_IWUSR);
 	if (fd1 == -1) {
 		printf ("Unable to open file descriptor1\n");
 		return 0;
 	}
-
-	memset (buf, 1, 128);
-
-	total_size = 128000;
 	
+	memset (buf, 1, 128);
+	
+	total_size = 128000;
 	while (total_size) {
 		size = (rand() % 127) + 1;
 		if (size > total_size) {
 			size = total_size;
 		}
+		// exit(0);
 		ret = s_write (fd1, buf, size);
 		if (ret != size) {
 			printf ("Unable to write to file\n");
@@ -37,9 +37,9 @@ int main_loop (char *filename)
 		}
 		total_size -= size;
 	}
-
+	
 	s_close (fd1);
-
+	
 	fd2 = s_open (filename, O_RDONLY, 0);
 	if (fd2 == -1) {
 		printf ("Unable to open file descriptor2\n");
